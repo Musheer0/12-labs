@@ -3,6 +3,8 @@ import { Host_Grotesk } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider"
+import { ClerkProvider } from '@clerk/nextjs'
+import ConvexClerkProvider from "@/components/convex-clerk-provider";
 
 const outfit = Host_Grotesk({subsets:['latin'],variable:'--font-sans'});
 
@@ -22,7 +24,9 @@ export default function RootLayout({
       <body
         className={` antialiased`}
       >
-        <ThemeProvider
+         <ClerkProvider>
+      <ConvexClerkProvider>
+         <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
@@ -30,6 +34,8 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+      </ConvexClerkProvider>
+       </ClerkProvider>
       </body>
     </html>
   );
