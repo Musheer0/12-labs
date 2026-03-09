@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button'
-import CreateNewVoiceDialog from '@/features/voices/components/create-new-voice-dialog'
-import React from 'react'
+import { Button } from "@/components/ui/button";
+import CreateNewVoiceDialog from "@/features/voices/components/create-new-voice-dialog";
+import React from "react";
 
 const page = () => {
   return (
-  <CreateNewVoiceDialog>
-    <Button>Add Voice</Button>
-  </CreateNewVoiceDialog>
-  )
-}
+    <CreateNewVoiceDialog>
+      <Button>Add Voice</Button>
+    </CreateNewVoiceDialog>
+  );
+};
 
-export default page
+export default page;

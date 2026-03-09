@@ -16,6 +16,8 @@
     "@base-ui/react": "^1.2.0",
     "@clerk/clerk-react": "^5.61.3",
     "@clerk/nextjs": "^7.0.1",
+    "@dicebear/collection": "^9.4.0",
+    "@dicebear/core": "^9.4.0",
     "@hookform/resolvers": "^5.2.2",
     "@tabler/icons-react": "^3.40.0",
     "@types/recordrtc": "^5.6.15",

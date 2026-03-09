@@ -14,7 +14,7 @@ export const s3 = new S3Client({
     secretAccessKey: process.env.R2_SECRET_KEY ?? "",
   },
 });
-export async function getUploadUrl(key:string) {
+export async function getUploadUrl(key: string) {
   const command = new PutObjectCommand({
     Bucket: process.env.S3_BUCKET!,
     Key: key,

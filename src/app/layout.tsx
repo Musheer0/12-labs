@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import { Host_Grotesk } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/theme-provider"
-import { ClerkProvider } from '@clerk/nextjs'
+import { ThemeProvider } from "@/components/theme-provider";
+import { ClerkProvider } from "@clerk/nextjs";
 import ConvexClerkProvider from "@/components/convex-clerk-provider";
 import { Toaster } from "sonner";
 
-const outfit = Host_Grotesk({subsets:['latin'],variable:'--font-sans'});
-
+const outfit = Host_Grotesk({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,22 +21,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", outfit.variable)}>
-      <body
-        className={` antialiased`}
-      >
-         <ClerkProvider>
-      <ConvexClerkProvider>
-         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster/>
-          </ThemeProvider>
-      </ConvexClerkProvider>
-       </ClerkProvider>
+      <body className={` antialiased`}>
+        <ClerkProvider>
+          <ConvexClerkProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </ConvexClerkProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

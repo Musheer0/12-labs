@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 import { useState, useRef, useCallback, useEffect } from "react";
 import type RecordRTCType from "recordrtc";
 const useAudioRecorder = () => {
-  const [isRecording ,setIsRecording] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -11,12 +11,12 @@ const useAudioRecorder = () => {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const micStreamRef = useRef<{ onDestroy: () => void } | null>(null);
-  const cleanup = useCallback(()=>{
-    if(timerRef.current){
-        clearInterval(timerRef.current);
-        timerRef.current =null;
+  const cleanup = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-   if (recorderRef.current) {
+    if (recorderRef.current) {
       recorderRef.current.destroy();
       recorderRef.current = null;
     }
@@ -25,42 +25,44 @@ const useAudioRecorder = () => {
       streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
     }
-  },[]);
-  const startRecording = useCallback(async()=>{
+  }, []);
+  const startRecording = useCallback(async () => {
     try {
       setError(null);
       setAudioBlob(null);
       setElapsedTime(0);
-      const stream =await navigator.mediaDevices.getUserMedia({audio:true});
-      streamRef.current=stream;
-      const {default:RecordRtc, StereoAudioRecorder} = await import ("recordrtc")
-      const recorder =  new RecordRtc(stream,{
-        recorderType:StereoAudioRecorder,
-        numberOfAudioChannels:1,
-        mimeType:"audio/wav",
-        desiredSampRate:4100
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      const { default: RecordRtc, StereoAudioRecorder } = await import(
+        "recordrtc"
+      );
+      const recorder = new RecordRtc(stream, {
+        recorderType: StereoAudioRecorder,
+        numberOfAudioChannels: 1,
+        mimeType: "audio/wav",
+        desiredSampRate: 4100,
       });
-      recorderRef.current= recorder;
+      recorderRef.current = recorder;
       recorder.startRecording();
       setIsRecording(true);
-         const startTime = Date.now();
+      const startTime = Date.now();
 
       timerRef.current = setInterval(() => {
         setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
       }, 200);
     } catch (err) {
-          cleanup();
+      cleanup();
 
       if (err instanceof DOMException && err.name === "NotAllowedError") {
         setError(
-          "Microphone access denied. Please allow microphone permission."
+          "Microphone access denied. Please allow microphone permission.",
         );
       } else {
         setError("Failed to access microphone.");
       }
     }
-  },[cleanup]);
-   const stopRecording = useCallback(
+  }, [cleanup]);
+  const stopRecording = useCallback(
     (onBlob?: (blob: Blob) => void) => {
       const recorder = recorderRef.current;
       if (!recorder) return;
@@ -75,9 +77,9 @@ const useAudioRecorder = () => {
         onBlob?.(blob);
       });
     },
-    [cleanup]
+    [cleanup],
   );
-    const resetRecording = useCallback(() => {
+  const resetRecording = useCallback(() => {
     cleanup();
     setIsRecording(false);
     setElapsedTime(0);
@@ -85,9 +87,9 @@ const useAudioRecorder = () => {
     setError(null);
   }, [cleanup]);
   function blobToFile(blob: Blob, filename: string) {
-  return new File([blob], filename, { type: blob.type });
-}
-   return {
+    return new File([blob], filename, { type: blob.type });
+  }
+  return {
     isRecording,
     elapsedTime,
     audioBlob,
@@ -95,8 +97,8 @@ const useAudioRecorder = () => {
     startRecording,
     stopRecording,
     resetRecording,
-    blobToFile
+    blobToFile,
   };
-}
+};
 
-export default useAudioRecorder
+export default useAudioRecorder;
