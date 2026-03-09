@@ -25,15 +25,16 @@ import {
 const CreateNewVoiceDialog = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
   const [isPending, setIsPending] = useState(false);
+  const [isOpen,setIsOpen] = useState(false)
   if (!isMobile)
     return (
-      <Dialog>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add New Voice</DialogTitle>
           </DialogHeader>
-          <CreateNewVoiceForm setIsPending={setIsPending} />
+          <CreateNewVoiceForm setIsPending={setIsPending} dailogState={setIsOpen}/>
           <DialogFooter>
             <DialogClose asChild>
               <Button disabled={isPending} variant={"destructive"}>
@@ -57,7 +58,7 @@ const CreateNewVoiceDialog = ({ children }: { children: React.ReactNode }) => {
             <DrawerDescription>Add an audio to clone it</DrawerDescription>
           </DrawerHeader>
           <div className="w-full py-5 px-3">
-            <CreateNewVoiceForm setIsPending={setIsPending} />
+            <CreateNewVoiceForm setIsPending={setIsPending} dailogState={setIsOpen} />
           </div>
           <DrawerFooter>
             <Button disabled={isPending} form="create-voice-form" type="submit">

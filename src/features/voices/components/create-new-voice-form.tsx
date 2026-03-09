@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import VoiceUpload from "./voice-upload";
-import { useMutation } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { ConvexError } from "convex/values";
 import { uploadFileFromS3 } from "@/lib/upload-file-from-s3";
@@ -24,13 +24,15 @@ import { Id } from "../../../../convex/_generated/dataModel";
 
 const CreateNewVoiceForm = ({
   setIsPending,
+  dailogState
 }: {
   setIsPending: (d: boolean) => void;
+  dailogState: (d: boolean) => void;
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const [pending, setPending] = useState(false);
   const mutate = useMutation(api.voices.mutations.createVoiceMeta);
-  const deleteMutate = useMutation(api.voices.mutations.deleteVoice);
+  const deleteMutate =  useAction(api.voices.actions.deleteVoice)
   const [voiceId, setVoiceId] = useState<string | null>(null);
   const [error, setError] = useState("");
   const form = useForm<tcreateVoiceSchema>({
@@ -72,6 +74,7 @@ const CreateNewVoiceForm = ({
     } finally {
       setIsPending(false);
       setPending(false);
+      dailogState(false)
     }
   }
 

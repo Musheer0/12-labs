@@ -25,7 +25,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
-import { useMutation } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import { toast } from "sonner";
@@ -50,7 +50,7 @@ const VoiceCard = ({ voice,   }: Props) => {
   const ur = useSpaceBear(voice._id);
   const renameMutation = useMutation(api.voices.mutations.updateVoiceName)
   const [newName, setNewName] = useState(voice.name);
-  const deleteMutation = useMutation(api.voices.mutations.deleteVoice)
+  const deleteMutation = useAction(api.voices.actions.deleteVoice)
   return (
     <div className="flex items-center gap-1 p-3 h-fit justify-between overflow-hidden relative w-full max-w-[300px] rounded-xl gap-3 border pr-3 lg:pr-6">
       <img src={ur!} className="absolute top-0 left-0 h-full blur-3xl" alt="" />
