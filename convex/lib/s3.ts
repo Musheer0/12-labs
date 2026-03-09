@@ -12,7 +12,7 @@ export const s3 = new S3Client({
 });
 export async function getUploadUrl(key:string) {
 const { url, fields } = await createPresignedPost(s3, {
-    Bucket: process.env.S3_BUCKET!,
+    Bucket:"11labs",
     Key: key,
     Expires: 20,
     Conditions: [

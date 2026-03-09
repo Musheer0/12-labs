@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider"
 import { ClerkProvider } from '@clerk/nextjs'
 import ConvexClerkProvider from "@/components/convex-clerk-provider";
+import { Toaster } from "sonner";
 
 const outfit = Host_Grotesk({subsets:['latin'],variable:'--font-sans'});
 
@@ -33,6 +34,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster/>
           </ThemeProvider>
       </ConvexClerkProvider>
        </ClerkProvider>

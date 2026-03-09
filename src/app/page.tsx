@@ -1,9 +1,12 @@
-import Text from '@/features/voices/components/test'
+import { Button } from '@/components/ui/button'
+import CreateNewVoiceDialog from '@/features/voices/components/create-new-voice-dialog'
 import React from 'react'
 
 const page = () => {
   return (
-    <Text/>
+  <CreateNewVoiceDialog>
+    <Button>Add Voice</Button>
+  </CreateNewVoiceDialog>
   )
 }
 
