@@ -1,12 +1,10 @@
 "use client";
 
+import { IconMusic, IconTrash, IconUpload } from "@tabler/icons-react";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-import { IconUpload, IconMusic, IconTrash } from "@tabler/icons-react";
+import { Card } from "@/components/ui/card";
 
 export default function AudioDropzone({
   onUpload,
@@ -15,13 +13,16 @@ export default function AudioDropzone({
 }) {
   const [file, setFile] = useState<File | null>(null);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const selected = acceptedFiles[0];
-    if (!selected) return;
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const selected = acceptedFiles[0];
+      if (!selected) return;
 
-    setFile(selected);
-    onUpload(selected);
-  }, []);
+      setFile(selected);
+      onUpload(selected);
+    },
+    [onUpload],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

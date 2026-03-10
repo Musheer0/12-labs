@@ -1,6 +1,6 @@
-import React from "react";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useRef, useState } from "react";
 import type RecordRTCType from "recordrtc";
+
 const useAudioRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -9,8 +9,8 @@ const useAudioRecorder = () => {
   const recorderRef = useRef<RecordRTCType | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const micStreamRef = useRef<{ onDestroy: () => void } | null>(null);
+  const _containerRef = useRef<HTMLDivElement>(null);
+  const _micStreamRef = useRef<{ onDestroy: () => void } | null>(null);
   const cleanup = useCallback(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -22,7 +22,9 @@ const useAudioRecorder = () => {
     }
 
     if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
+      for (const track of streamRef.current.getTracks()) {
+        track.stop();
+      }
       streamRef.current = null;
     }
   }, []);

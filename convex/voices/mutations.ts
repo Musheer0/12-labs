@@ -27,8 +27,8 @@ export const deleteVoice = mutation({
     }
 
     await ctx.db.delete(args.id);
-    if(voice.s3_object_key){
-      await deleteAudio(voice.s3_object_key!)
+    if (voice.s3_object_key) {
+      await deleteAudio(voice.s3_object_key!);
     }
     return { success: true };
   },
