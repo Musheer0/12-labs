@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createAvatar } from "@dicebear/core";
 import { glass } from "@dicebear/collection";
+import { createAvatar } from "@dicebear/core";
+import { useEffect, useState } from "react";
 
 export function useSpaceBear(key: string) {
   const [url, setUrl] = useState<string | null>(null);

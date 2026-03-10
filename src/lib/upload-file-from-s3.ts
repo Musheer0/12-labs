@@ -1,6 +1,6 @@
 export const uploadFileFromS3 = async (
   url: string,
-  fields: Object,
+  fields: Record<string, string>,
   file: File,
 ) => {
   const form = new FormData();

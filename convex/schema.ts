@@ -18,7 +18,7 @@ export default defineSchema({
     creator_id: v.string(),
     prompt: v.string(),
     voice_name: v.string(),
-    void_id: v.id("voice"),
+    voice_id: v.id("voice"),
     s3_object_key: v.string(),
     temperature: v.float64(),
     topP: v.float64(),
@@ -29,5 +29,7 @@ export default defineSchema({
       v.literal("pending"),
       v.literal("error"),
     ),
-  }).index("by_org", ["org_id"]),
+  })
+    .index("by_org", ["org_id"])
+    .index("by_ord_voice_id", ["org_id", "voice_id"]),
 });

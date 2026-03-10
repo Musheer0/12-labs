@@ -1,11 +1,9 @@
 "use client";
-import React, { useState } from "react";
-import {
-  createVoiceSchema,
-  tcreateVoiceSchema,
-} from "../schemas/create-voice-schema";
-import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction, useMutation } from "convex/react";
+import { ConvexError } from "convex/values";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
   Field,
@@ -15,16 +13,18 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import VoiceUpload from "./voice-upload";
-import { useAction, useMutation } from "convex/react";
-import { api } from "../../../../convex/_generated/api";
-import { ConvexError } from "convex/values";
 import { uploadFileFromS3 } from "@/lib/upload-file-from-s3";
-import { Id } from "../../../../convex/_generated/dataModel";
+import { api } from "../../../../convex/_generated/api";
+import type { Id } from "../../../../convex/_generated/dataModel";
+import {
+  createVoiceSchema,
+  type tcreateVoiceSchema,
+} from "../schemas/create-voice-schema";
+import VoiceUpload from "./voice-upload";
 
 const CreateNewVoiceForm = ({
   setIsPending,
-  dailogState
+  dailogState,
 }: {
   setIsPending: (d: boolean) => void;
   dailogState: (d: boolean) => void;
@@ -32,7 +32,7 @@ const CreateNewVoiceForm = ({
   const [file, setFile] = useState<File | null>(null);
   const [pending, setPending] = useState(false);
   const mutate = useMutation(api.voices.mutations.createVoiceMeta);
-  const deleteMutate =  useAction(api.voices.actions.deleteVoice)
+  const deleteMutate = useAction(api.voices.actions.deleteVoice);
   const [voiceId, setVoiceId] = useState<string | null>(null);
   const [error, setError] = useState("");
   const form = useForm<tcreateVoiceSchema>({
@@ -74,7 +74,7 @@ const CreateNewVoiceForm = ({
     } finally {
       setIsPending(false);
       setPending(false);
-      dailogState(false)
+      dailogState(false);
     }
   }
 
@@ -89,25 +89,23 @@ const CreateNewVoiceForm = ({
             control={form.control}
             render={({ field, fieldState }) => {
               return (
-                <>
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="form-rhf-demo-title">
-                      Voice Name
-                    </FieldLabel>
-                    <Input
-                      disabled={pending}
-                      {...field}
-                      id="form-rhf-demo-title"
-                      aria-invalid={fieldState.invalid}
-                      placeholder="Enter Voice Name"
-                      autoComplete="off"
-                      className="h-auto! py-2.5"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                </>
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-rhf-demo-title">
+                    Voice Name
+                  </FieldLabel>
+                  <Input
+                    disabled={pending}
+                    {...field}
+                    id="form-rhf-demo-title"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Enter Voice Name"
+                    autoComplete="off"
+                    className="h-auto! py-2.5"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               );
             }}
           />
@@ -117,25 +115,23 @@ const CreateNewVoiceForm = ({
             control={form.control}
             render={({ field, fieldState }) => {
               return (
-                <>
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="form-rhf-demo-title">
-                      Voice Description
-                    </FieldLabel>
-                    <Textarea
-                      disabled={pending}
-                      {...field}
-                      id="form-rhf-demo-title"
-                      aria-invalid={fieldState.invalid}
-                      placeholder="Enter Voice Description (optional)"
-                      autoComplete="off"
-                      className="h-auto! py-2.5 min-h-[130px]"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                </>
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-rhf-demo-title">
+                    Voice Description
+                  </FieldLabel>
+                  <Textarea
+                    disabled={pending}
+                    {...field}
+                    id="form-rhf-demo-title"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Enter Voice Description (optional)"
+                    autoComplete="off"
+                    className="h-auto! py-2.5 min-h-[130px]"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               );
             }}
           />

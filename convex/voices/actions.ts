@@ -1,7 +1,7 @@
 import { ConvexError, v } from "convex/values";
-import { action} from "../_generated/server";
-import { deleteAudio, getUploadUrl } from "../lib/s3";
-import {internal} from '../_generated/api'
+import { internal } from "../_generated/api";
+import { action } from "../_generated/server";
+import { deleteAudio } from "../lib/s3";
 export const deleteVoice = action({
   args: {
     id: v.id("voice"),
@@ -14,9 +14,12 @@ export const deleteVoice = action({
       throw new ConvexError("Unauthorized");
     }
 
-   const {key} = await ctx.runMutation(internal.voices.internal_mutations.deleteVoice,{id:args.id,org_id:String(auth.org_id)})
-    if(key){
-      await deleteAudio(key)
+    const { key } = await ctx.runMutation(
+      internal.voices.internal_mutations.deleteVoice,
+      { id: args.id, org_id: String(auth.org_id) },
+    );
+    if (key) {
+      await deleteAudio(key);
     }
     return { success: true };
   },

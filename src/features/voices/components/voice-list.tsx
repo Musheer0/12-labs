@@ -1,6 +1,5 @@
 "use client";
 import { useQuery } from "convex/react";
-import React from "react";
 import { api } from "../../../../convex/_generated/api";
 import VoiceCard from "./voice-card";
 
@@ -20,9 +19,7 @@ const VoiceList = ({ className }: { className?: string }) => {
   if (data.customVoices.length === 0) {
     return (
       <div className={className}>
-        <p className="text-muted-foreground">
-          No voices yet. Go create one.
-        </p>
+        <p className="text-muted-foreground">No voices yet. Go create one.</p>
       </div>
     );
   }

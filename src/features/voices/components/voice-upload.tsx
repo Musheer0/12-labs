@@ -1,8 +1,7 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React from "react";
-import AudioDropzone from "./voice-file-upload";
 import VoiceFileRecorder from "./voice-file-record";
+import AudioDropzone from "./voice-file-upload";
 
 const VoiceUpload = ({ onUpload }: { onUpload: (file: File) => void }) => {
   return (

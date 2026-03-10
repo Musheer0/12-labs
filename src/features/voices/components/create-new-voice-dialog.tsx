@@ -1,4 +1,6 @@
 "use client";
+import type React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,9 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useIsMobile } from "@/hooks/use-mobile";
-import React, { useState } from "react";
-import CreateNewVoiceForm from "./create-new-voice-form";
 import {
   Drawer,
   DrawerClose,
@@ -22,10 +21,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import CreateNewVoiceForm from "./create-new-voice-form";
+
 const CreateNewVoiceDialog = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
   const [isPending, setIsPending] = useState(false);
-  const [isOpen,setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   if (!isMobile)
     return (
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -34,7 +36,10 @@ const CreateNewVoiceDialog = ({ children }: { children: React.ReactNode }) => {
           <DialogHeader>
             <DialogTitle>Add New Voice</DialogTitle>
           </DialogHeader>
-          <CreateNewVoiceForm setIsPending={setIsPending} dailogState={setIsOpen}/>
+          <CreateNewVoiceForm
+            setIsPending={setIsPending}
+            dailogState={setIsOpen}
+          />
           <DialogFooter>
             <DialogClose asChild>
               <Button disabled={isPending} variant={"destructive"}>
@@ -58,7 +63,10 @@ const CreateNewVoiceDialog = ({ children }: { children: React.ReactNode }) => {
             <DrawerDescription>Add an audio to clone it</DrawerDescription>
           </DrawerHeader>
           <div className="w-full py-5 px-3">
-            <CreateNewVoiceForm setIsPending={setIsPending} dailogState={setIsOpen} />
+            <CreateNewVoiceForm
+              setIsPending={setIsPending}
+              dailogState={setIsOpen}
+            />
           </div>
           <DrawerFooter>
             <Button disabled={isPending} form="create-voice-form" type="submit">

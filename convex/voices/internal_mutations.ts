@@ -1,16 +1,13 @@
 import { ConvexError, v } from "convex/values";
-import { internalMutation, mutation } from "../_generated/server";
-import { deleteAudio, getUploadUrl } from "../lib/s3";
+import { internalMutation } from "../_generated/server";
 
 export const deleteVoice = internalMutation({
   args: {
     id: v.id("voice"),
-    org_id:v.string()
+    org_id: v.string(),
   },
 
   handler: async (ctx, args) => {
-  
-
     const voice = await ctx.db.get(args.id);
 
     if (!voice) {
@@ -21,6 +18,6 @@ export const deleteVoice = internalMutation({
     }
 
     await ctx.db.delete(args.id);
-    return { success: true ,key:voice.s3_object_key};
+    return { success: true, key: voice.s3_object_key };
   },
 });

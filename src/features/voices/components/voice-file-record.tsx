@@ -1,17 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import useAudioRecorder from "../hooks/use-audio-recorder";
-
-import { Card } from "@/components/ui/card";
+import { IconMicrophone, IconPlayerStop, IconTrash } from "@tabler/icons-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
-import {
-  IconMicrophone,
-  IconPlayerStop,
-  IconTrash,
-  IconPlayerPlay,
-} from "@tabler/icons-react";
+import { Card } from "@/components/ui/card";
+import useAudioRecorder from "../hooks/use-audio-recorder";
 
 const VoiceFileRecorder = ({
   onUpload,
@@ -22,7 +15,6 @@ const VoiceFileRecorder = ({
     startRecording,
     stopRecording,
     resetRecording,
-    audioBlob,
     elapsedTime,
     blobToFile,
     isRecording,
@@ -78,7 +70,9 @@ const VoiceFileRecorder = ({
 
       {file && (
         <div className="flex items-center gap-2  flex-col">
-          <audio controls src={URL.createObjectURL(file)} className="h-8 " />
+          <audio controls src={URL.createObjectURL(file)} className="h-8 ">
+            <track kind="captions" />
+          </audio>
 
           <Button
             className="w-full"
